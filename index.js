@@ -1,7 +1,7 @@
 const express=require('express')
 const mongoose = require('mongoose');
 require("dotenv").config();
-const systemconfig=require("./config/database")
+const systemconfig=require("./config/system.js")
 const database=require('./config/database')
 const route=require("./routes/client/index.route")
 const routeAdmin=require("./routes/admin/index.route")
