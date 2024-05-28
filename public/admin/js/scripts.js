@@ -31,3 +31,19 @@ if(formSearch){
         window.location.href=url.href;
     })
 }
+
+//button-pagination
+const buttonPagination=document.querySelectorAll("[button-pagination]")
+if(buttonPagination){
+    const url= new URL(window.location.href)
+    buttonPagination.forEach(button=>{
+        button.addEventListener("click",(e)=>{
+            const page=button.getAttribute("button-pagination");
+            //console.log(page);
+            if(page){
+                url.searchParams.set("page",page) // function sao lại có dấu bằng ở đây chấm hỏi luôn á 
+            }
+            window.location.href=url.href
+        })
+    })
+}
