@@ -117,16 +117,3 @@ if(formChangeMulti){
     })
 }
 
-// show alert
-const showAlert=document.querySelector("[show-alert]");
-if(showAlert){
-    // console.log(showAlert);
-    const time=parserInt(showAlert.getAttribute("data-time")) // chú ý các kiểu thuộc tính tự định nghĩa đều là kiểu string nên phải cận thận
-    const closeAlert=document.querySelector("[close-alert]")
-    setTimeout(() => {
-        showAlert.classList.add("alert-hidden")
-    }, time);
-    closeAlert.addEventListener("click", ()=>{
-        closeAlert.classList.add("alert-hidden");
-    });
-}

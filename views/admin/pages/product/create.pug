@@ -59,21 +59,18 @@ block main
                     )
                 div(
                     class="form-group"
-                    upload-image
                 )
                     label(for="thumbnail") ảnh
                     input(
-                        type="file"
+                        type="text"
                         class="form-control-file"
                         id="thumbnail"
                         name="thumbnail"
                         accept="image/*"
-                        upload-image-input
                     )
                     img(
                         src= " "
                         class="image-preview"
-                        upload-image-preview 
                     )
                 div(class="form-group")
                     label(for="position") vị trí

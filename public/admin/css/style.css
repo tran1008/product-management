@@ -36,7 +36,7 @@
     padding: 6px 10px;
     border-bottom: 1px solid #515151;
 }
-[show-alert] {
+/* [show-alert] {
     position: fixed;
     top:0;
     right:15px;
@@ -77,4 +77,4 @@
 }
 .inner-preview[src=""]{
     display: none;
-}
+} */
