@@ -1,7 +1,9 @@
 // [GET] /admin/product
-const product=require('../../models/product.model')
+// const product=require('../../models/product.model')
 const filterStatusHelper = require("../../helper/filterstatus")
 const searchHelper=require("../../helper/search")
+const product = require('../../models/product.model')
+const systemConfig=require("../../config/system")
 module.exports.index= async(req,res)=>{
     // console.log(req.query.status)
     // truy vấn data từ database
@@ -36,7 +38,7 @@ module.exports.index= async(req,res)=>{
     const totalPage=Math.ceil(countProduct/objectPagination.limitItems); // tính số trang
     objectPagination.totalPage=totalPage;
     // console.log(objectPagination.currentPage);
-    const products= await product.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip)//truy vấn data trong database nên phải có await ở đây thì skip sẽ thực hiện trước
+    const products= await product.find(find).sort({position:"desc"}).limit(objectPagination.limitItems).skip(objectPagination.skip)//truy vấn data trong database nên phải có await ở đây thì skip sẽ thực hiện trước
     // làm giao diện sản phẩm
     // console.log(products);
     res.render('admin/pages/product/index.pug',{
@@ -46,4 +48,102 @@ module.exports.index= async(req,res)=>{
         keyword:objectSearch.keyword,
         pagination:objectPagination
     })
+}
+//:status là truyền status là route động :id
+// cánh này cũng được xử lý logic cũng link sang được trang khác nhưng ở đây là method get khi mà người dùng cố tình truy cập vào method get đó thì nó sẽ vô tình update lại giao diện
+// ví dụ người dùng cố tình truy cập vào method là get thì nó sẽ không cập nhật lại giao diện vì không đúng logic
+// req.query là sau dấu chấm hỏi
+//update lại vào trong db
+
+module.exports.changeStatus= async(req,res)=>{
+    // console.log(req.params)
+    const status=req.params.status // gán lại trạng thái sau khi đã gửi form và update vào database
+    const id=req.params.id // gán id sau khi đã gửi form
+    await product.updateOne({ _id : id }, {status : status });
+    req.flash('success', 'Cập nhật trạng thái thành công');
+    res.redirect("back");
+}
+// nối các phần tử của mảng lại với nhau thành một chuỗi
+// danh sách các id dung .split là convert về thành từng phần tử và lưu vào một mảng
+module.exports.multi= async(req,res)=>{
+    const type=req.body.type;
+    const ids=req.body.ids.split(", "); //convert lại về thành từng phần tử và lưu vào 1 mảng
+    switch (type) {
+        case "active":
+            await product.updateMany({_id:{$in:ids}},{status:"active"})
+            break;
+        case "inactive":
+            await product.updateMany({_id:{$in:ids}},{status:"inactive"})
+            break;
+        case "delete-all":
+            await product.updateMany({_id:{$in:ids}},{deleted:true})
+            break;
+        case "change-position":
+            // console.log(ids);
+            for(const item of ids){ // for of là lặp qua các phần tử của mảng 
+                // console.log(item.split("+"));
+                // dùng cấu trúc destructering
+                let [id,position]=item.split("+");
+                position=parseInt(position); // màu vàng mới là kiểu number
+                await product.updateOne({ _id :id }, { position : position });
+            }
+            break;
+        default:
+            break;
+    }
+    res.redirect("back");
+}
+
+module.exports.deleteItem= async(req,res)=>{
+    // console.log(req.params)
+    // const status=req.params.status // gán lại trạng thái sau khi đã gửi form và update vào database
+    const id=req.params.id // gán id sau khi đã gửi form
+    // await product.deleteOne({_id:id}) này là xóa cứng
+    await product.updateOne({ _id : id }, //này là xóa mềm nè
+         {
+            deleted:true,
+            deletedAt:new Date()
+        });
+    res.redirect("back");
+}
+
+module.exports.create= async(req,res)=>{
+    res.render('admin/pages/product/create.pug',{
+        pageTitle:"Tạo mới 1 sản phẩm",
+    })
+}
+module.exports.createPost=async(req,res)=>{
+    console.log(req.file)
+    req.body.price=parseInt(req.body.price)
+    req.body.discountPercentage=parseInt(req.body.discountPercentage)
+    req.body.stock=parseInt(req.body.stock)
+    // console.log(req.body);
+    if(req.body.position == " "){
+        const countProduct= await product.count();
+        req.body.position=countProduct+1;
+    }else{
+        req.body.position=parseInt(req.body.position);
+    }
+    // const products=new product(req.body)
+    // await products.save();
+    res.redirect("/admin/products");
+}
+
+module.exports.detail=async(req,res)=>
+{
+    try{
+        let find={
+            deleted:false,
+            _id:req.params.id
+        }
+        const products =await product.findOne(find)
+        res.render('admin/pages/product/detail.pug',{
+            pageTitle:products.title,
+            product:products,
+        })
+    }catch(error){
+        res.redirect(`${systemConfig}/products`)
+    }
+
+
 }
