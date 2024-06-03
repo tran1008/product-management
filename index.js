@@ -24,9 +24,9 @@ app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 // End Flash
 const port=process.env.PORT;
-app.set('views', './views');
+app.set('views', `${__dirname}/views`);
 app.set('views engine', 'pug');
-app.use(express.static('public')) //cấu hình file tĩnh
+app.use(express.static(`${__dirname}/public`)) //cấu hình file tĩnh
 // APP LOCAL VARIABLE
 app.locals.prefixAdmin=systemconfig.prefixAdmin
 route(app)
