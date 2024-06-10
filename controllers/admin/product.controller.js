@@ -73,14 +73,15 @@ module.exports.multi= async(req,res)=>{
     switch (type) {
         case "active":
             await product.updateMany({_id:{$in:ids}},{status:"active"})
-            req.flash('success', `'Cập nhật trạng thái thành công ${ids.length} sản phẩm !`);
+            req.flash('success', `Cập nhật trạng thái thành công ${ids.length} sản phẩm !`);
             break;
         case "inactive":
             await product.updateMany({_id:{$in:ids}},{status:"inactive"})
-            req.flash('success', `'Cập nhật trạng thái thành công ${ids.length} sản phẩm !`);
+            req.flash('success', `Cập nhật trạng thái thành công ${ids.length} sản phẩm !`);
             break;
         case "delete-all":
             await product.updateMany({_id:{$in:ids}},{deleted:true})
+            req.flash('success', `Đã xóa thành công ${ids.length} sản phẩm !`);
             break;
         case "change-position":
             // console.log(ids);
@@ -90,6 +91,7 @@ module.exports.multi= async(req,res)=>{
                 let [id,position]=item.split("+");
                 position=parseInt(position); // màu vàng mới là kiểu number
                 await product.updateOne({ _id :id }, { position : position });
+                req.flash('success', `Đã đổi vị trí thành công ${ids.length} sản phẩm !`);
             }
             break;
         default:
