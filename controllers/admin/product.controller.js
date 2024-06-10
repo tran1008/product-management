@@ -1,5 +1,7 @@
 // [GET] /admin/product
 // const product=require('../../models/product.model')
+// controller là tệp dùng để nhận yêu cầu từ máy khách kết nối tới cơ sở dữ liệu và trả về dữ liệu cho người dùng
+// dao là data access object dùng để lọc ra các trường hay còn gọi là schema trong db 
 const filterStatusHelper = require("../../helper/filterstatus")
 const searchHelper=require("../../helper/search")
 const product = require('../../models/product.model')
@@ -41,7 +43,7 @@ module.exports.index= async(req,res)=>{
     const products= await product.find(find).sort({position:"desc"}).limit(objectPagination.limitItems).skip(objectPagination.skip)//truy vấn data trong database nên phải có await ở đây thì skip sẽ thực hiện trước
     // làm giao diện sản phẩm
     // console.log(products);
-    res.render('admin/pages/product/index.pug',{
+    res.render('admin/pages/products/index.pug',{
         pageTitle:"Trang danh sách sản phẩm",
         product:products,
         filterStatus:filterStatus,
@@ -71,9 +73,11 @@ module.exports.multi= async(req,res)=>{
     switch (type) {
         case "active":
             await product.updateMany({_id:{$in:ids}},{status:"active"})
+            req.flash('success', `'Cập nhật trạng thái thành công ${ids.length} sản phẩm !`);
             break;
         case "inactive":
             await product.updateMany({_id:{$in:ids}},{status:"inactive"})
+            req.flash('success', `'Cập nhật trạng thái thành công ${ids.length} sản phẩm !`);
             break;
         case "delete-all":
             await product.updateMany({_id:{$in:ids}},{deleted:true})
@@ -108,7 +112,7 @@ module.exports.deleteItem= async(req,res)=>{
 }
 
 module.exports.create= async(req,res)=>{
-    res.render('admin/pages/product/create.pug',{
+    res.render('admin/pages/products/create.pug',{
         pageTitle:"Tạo mới 1 sản phẩm",
     })
 }
@@ -136,7 +140,7 @@ module.exports.detail=async(req,res)=>
             _id:req.params.id
         }
         const products =await product.findOne(find)
-        res.render('admin/pages/product/detail.pug',{
+        res.render('admin/pages/products/detail.pug',{
             pageTitle:products.title,
             product:products,
         })

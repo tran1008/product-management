@@ -117,3 +117,15 @@ if(formChangeMulti){
     })
 }
 
+const showAlert=document.querySelector("[show-alert]"); 
+if(showAlert){ // lấy ra thẻ div
+    const time=parseInt(showAlert.getAttribute("data-time"));
+    const closeAlert=showAlert.getAttribute("close-alert")
+    setTimeout(()=>{
+        showAlert.classList.add("alert-hidden")
+    },time);
+    closeAlert.addEventListener("click",()=>{
+        showAlert.classList.add("alert-hidden")
+    })
+}
+

@@ -3,17 +3,12 @@ include ../../mixins/filterStatus.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
+include ../../mixins/alert.pug
 //- nên nhớ thuộc tính chỉ gán bằng dấu bằng ko bao giờ gán bằng dấu hai chấm
 //- tạo một hộp thoại checkbox xong dùng form để gửi lên
 
 block main
-  - if (messages.success)
-    .message.info
-      div(
-        class="alert alert-success"
-        show-alert
-        data-time="5000"
-      ) #{messages.success} <span close-alert>X</span>
+  +alert_success(3000)
   h1 Danh sách sản phẩm 
   .card.mb-3 
     .card-header Bộ lọc và tìm kiếm 
