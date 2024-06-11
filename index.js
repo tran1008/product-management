@@ -1,4 +1,5 @@
 const express=require('express')
+const cors=require("cors")
 const mongoose = require('mongoose');
 const methodOverride = require('method-override') // dùng để truyền các phương thức khác cho bug thay vì truyền bình thường là get và post
 const flash = require('express-flash')
@@ -16,6 +17,7 @@ database.connect();
 // console.log(database)
 // dạng Shema này dùng để lấy từng trường trong cơ sở dữ liệu
 const app=express();
+app.use(cors());
 app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: false })) // đoạn này extended bằng false có nghĩa rằng this object will  contain a key-value, where the value can be a string or array
 //Flash
