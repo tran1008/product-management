@@ -130,9 +130,6 @@ module.exports.createPost = async (req, res) => { // phần này dùng để pos
     } else {
         req.body.position = parseInt(req.body.position);
     }
-    if (req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
-    }
     const products = new Product(req.body)
     await products.save();
     res.redirect(`/admin/products`);

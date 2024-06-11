@@ -16,7 +16,6 @@ database.connect();
 // console.log(database)
 // dạng Shema này dùng để lấy từng trường trong cơ sở dữ liệu
 const app=express();
-app.use(cors(corsConfig));
 const port=process.env.PORT;
 app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: false })) // đoạn này extended bằng false có nghĩa rằng this object will  contain a key-value, where the value can be a string or array
