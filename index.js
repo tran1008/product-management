@@ -18,6 +18,7 @@ database.connect();
 // dạng Shema này dùng để lấy từng trường trong cơ sở dữ liệu
 const app=express();
 app.use(cors());
+const port=process.env.PORT;
 app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: false })) // đoạn này extended bằng false có nghĩa rằng this object will  contain a key-value, where the value can be a string or array
 //Flash
@@ -25,7 +26,6 @@ app.use(cookieParser('KGKAKCKDKQ'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 // End Flash
-const port=process.env.PORT;
 app.set('views', `${__dirname}/views`);
 app.set('views engine', 'pug');
 app.use(express.static(`${__dirname}/public`)) //cấu hình file tĩnh
