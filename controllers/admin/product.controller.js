@@ -4,7 +4,7 @@
 // dao là data access object dùng để lọc ra các trường hay còn gọi là schema trong db 
 const filterStatusHelper = require("../../helper/filterstatus")
 const searchHelper=require("../../helper/search")
-const product = require('../../models/product.model')
+const Product = require('../../models/product.model')
 const systemConfig=require("../../config/system")
 module.exports.index= async(req,res)=>{
     // console.log(req.query.status)
@@ -36,11 +36,11 @@ module.exports.index= async(req,res)=>{
     }
     // đoạn này đang xử lý bên backend chưa truyền ra cập nhật giao diện cho người dùng
     objectPagination.skip=(objectPagination.currentPage-1)*objectPagination.limitItems; // tính số sản phẩm hiển thị trên một page
-    const countProduct= await product.countDocuments(find)
+    const countProduct= await Product.countDocuments(find)
     const totalPage=Math.ceil(countProduct/objectPagination.limitItems); // tính số trang
     objectPagination.totalPage=totalPage;
     // console.log(objectPagination.currentPage);
-    const products= await product.find(find).sort({position:"desc"}).limit(objectPagination.limitItems).skip(objectPagination.skip)//truy vấn data trong database nên phải có await ở đây thì skip sẽ thực hiện trước
+    const products= await Product.find(find).sort({position:"desc"}).limit(objectPagination.limitItems).skip(objectPagination.skip)//truy vấn data trong database nên phải có await ở đây thì skip sẽ thực hiện trước
     // làm giao diện sản phẩm
     // console.log(products);
     res.render('admin/pages/products/index.pug',{
@@ -61,7 +61,7 @@ module.exports.changeStatus= async(req,res)=>{
     // console.log(req.params)
     const status=req.params.status // gán lại trạng thái sau khi đã gửi form và update vào database
     const id=req.params.id // gán id sau khi đã gửi form
-    await product.updateOne({ _id : id }, {status : status });
+    await Product.updateOne({ _id : id }, {status : status });
     req.flash('success', 'Cập nhật trạng thái thành công');
     res.redirect("back");
 }
@@ -72,15 +72,15 @@ module.exports.multi= async(req,res)=>{
     const ids=req.body.ids.split(", "); //convert lại về thành từng phần tử và lưu vào 1 mảng
     switch (type) {
         case "active":
-            await product.updateMany({_id:{$in:ids}},{status:"active"})
+            await Product.updateMany({_id:{$in:ids}},{status:"active"})
             req.flash('success', `Cập nhật trạng thái thành công ${ids.length} sản phẩm !`);
             break;
         case "inactive":
-            await product.updateMany({_id:{$in:ids}},{status:"inactive"})
+            await Product.updateMany({_id:{$in:ids}},{status:"inactive"})
             req.flash('success', `Cập nhật trạng thái thành công ${ids.length} sản phẩm !`);
             break;
         case "delete-all":
-            await product.updateMany({_id:{$in:ids}},{deleted:true})
+            await Product.updateMany({_id:{$in:ids}},{deleted:true})
             req.flash('success', `Đã xóa thành công ${ids.length} sản phẩm !`);
             break;
         case "change-position":
@@ -90,7 +90,7 @@ module.exports.multi= async(req,res)=>{
                 // dùng cấu trúc destructering
                 let [id,position]=item.split("+");
                 position=parseInt(position); // màu vàng mới là kiểu number
-                await product.updateOne({ _id :id }, { position : position });
+                await Product.updateOne({ _id :id }, { position : position });
                 req.flash('success', `Đã đổi vị trí thành công ${ids.length} sản phẩm !`);
             }
             break;
@@ -105,7 +105,7 @@ module.exports.deleteItem= async(req,res)=>{
     // const status=req.params.status // gán lại trạng thái sau khi đã gửi form và update vào database
     const id=req.params.id // gán id sau khi đã gửi form
     // await product.deleteOne({_id:id}) này là xóa cứng
-    await product.updateOne({ _id : id }, //này là xóa mềm nè
+    await Product.updateOne({ _id : id }, //này là xóa mềm nè
          {
             deleted:true,
             deletedAt:new Date()
@@ -113,27 +113,29 @@ module.exports.deleteItem= async(req,res)=>{
     res.redirect("back");
 }
 
-module.exports.create= async(req,res)=>{
+module.exports.create= async(req,res)=>{  // phần này dùng để get và hiện thị ra giao diện
     res.render('admin/pages/products/create.pug',{
         pageTitle:"Tạo mới 1 sản phẩm",
     })
 }
-module.exports.createPost=async(req,res)=>{
+module.exports.createPost=async(req,res)=>{ // phần này dùng để post và lưu vào trong database và hiện thị lại giao diện
+    // console.log(req.file)
     req.body.price=parseInt(req.body.price)
     req.body.discountPercentage=parseInt(req.body.discountPercentage)
     req.body.stock=parseInt(req.body.stock)
     // console.log(req.body);
-    if(req.body.position == " "){
-        const countProduct= await product.count();
-        req.body.position=countProduct+1;
+    if(req.body.position == ""){
+        const countProducts= await Product.countDocuments();
+        req.body.position=countProducts+1;
     }else{
         req.body.position=parseInt(req.body.position);
     }
-    const products=new product(req.body)
+    req.body.thumbnail=`/uploads/${req.file.filename}`;
+    const products=new Product(req.body)
     await products.save();
-    res.redirect("/admin/products");
+    res.redirect(`/admin/products`);
 }
-
+// tạo route động thì lúc console.log(req.params.id)
 module.exports.detail=async(req,res)=>
 {
     try{
@@ -141,7 +143,7 @@ module.exports.detail=async(req,res)=>
             deleted:false,
             _id:req.params.id
         }
-        const products =await product.findOne(find)
+        const products =await Product.findOne(find)
         res.render('admin/pages/products/detail.pug',{
             pageTitle:products.title,
             product:products,

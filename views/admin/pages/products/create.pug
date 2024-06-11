@@ -1,5 +1,5 @@
 extends ../../layout/default.pug
-
+//- ô backend phải tạo ra url còn ô front end chỉ sử dụng url đó mà thôi
 block main
     .container.my-3
       .row
@@ -9,6 +9,7 @@ block main
                 action=`${prefixAdmin}/products/create`
                 id="form-create-product"
                 method="POST"
+                enctype="multipart/form-data"
             )
                 div(class="form-group")
                     label(for="title") Tiêu đề
@@ -59,17 +60,20 @@ block main
                     )
                 div(
                     class="form-group"
+                    upload-image
                 )
                     label(for="thumbnail") ảnh
                     input(
-                        type="text"
+                        type="file"
                         class="form-control-file"
                         id="thumbnail"
                         name="thumbnail"
                         accept="image/*"
+                        upload-image-input
                     )
                     img(
-                        src= " "
+                        src=""
+                        upload-image-preview
                         class="image-preview"
                     )
                 div(class="form-group")
@@ -82,7 +86,7 @@ block main
                         placeholder="Tự động tăng"
                         min="1"
                     )
-                div(class="form-group form check form-check-inline")
+                div(class="form-group form-check form-check-inline")
                     input(
                         type="radio"
                         class="form-check-input"
@@ -91,8 +95,8 @@ block main
                         value="active"
                         checked
                     )
-                    label(for="statusActive" class="form-check-inline") Hoạt động
-                div(class="form-group form check form-check-inline")
+                    label(for="statusActive" class="form-check-label") Hoạt động
+                div(class="form-group form-check form-check-inline")
                     input(
                         type="radio"
                         class="form-check-input"
@@ -101,10 +105,9 @@ block main
                         value="inactive"
                         checked
                     )
-                    label(for="statusActive" class="form-check-inline") Dừng Hoạt động
+                    label(for="statusInActive" class="form-check-label") Dừng Hoạt động
                 div(class="form-group")
                     button(
                         type="submit"
                         class="btn btn-primary"
                     ) Tạo mới
-            script(src="/admin/js/product.js")

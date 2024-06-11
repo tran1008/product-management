@@ -8,7 +8,7 @@ include ../../mixins/alert.pug
 //- tạo một hộp thoại checkbox xong dùng form để gửi lên
 
 block main
-  +alert_success(3000)
+  +alert_success(2000)
   h1 Danh sách sản phẩm 
   .card.mb-3 
     .card-header Bộ lọc và tìm kiếm 
@@ -22,7 +22,14 @@ block main
   .card.mb-3 
     .card-header Danh sách sản phẩm 
       .card-body
-        +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        .row
+            .col-8
+                +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+            .col-4
+                a(
+                    href=`${prefixAdmin}/products/create`
+                    class="btn btn-outline-success"
+                ) +Thêm mới
         table(
             class="table table-hover table-sm"
             checkbox-multi
@@ -102,5 +109,7 @@ block main
         id="form-delete-item"
         data-path=`${prefixAdmin}/products/delete`
     )
+    
     script(src="/admin/js/product.js")
+    script(src="/admin/js/script.js")
         
