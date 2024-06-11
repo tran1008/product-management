@@ -1,6 +1,5 @@
 const express=require('express')
 const cors=require("cors")
-co
 const mongoose = require('mongoose');
 const methodOverride = require('method-override') // dùng để truyền các phương thức khác cho bug thay vì truyền bình thường là get và post
 const flash = require('express-flash')
