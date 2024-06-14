@@ -1,4 +1,5 @@
 const express=require('express')
+const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override') // dùng để truyền các phương thức khác cho bug thay vì truyền bình thường là get và post
 const flash = require('express-flash')
@@ -24,6 +25,10 @@ app.use(cookieParser('KGKAKCKDKQ'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
 // End Flash
+
+// TinyMCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+// EndTinyMce
 app.set('views', `${__dirname}/views`);
 app.set('views engine', 'pug');
 app.use(express.static(`${__dirname}/public`)) //cấu hình file tĩnh
@@ -34,3 +39,4 @@ routeAdmin(app)
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
 })
+//tạo ra bộ soạn thảo cơ bản dùng tinyMCE, tạo ra nhiều bộ sản phẩm thêm class vào

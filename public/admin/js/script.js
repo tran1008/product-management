@@ -141,3 +141,34 @@ if(uploadImage){
         }
     })
 }
+
+// sortSelect
+const sort=document.querySelector("[sort]")
+if(sort){
+    let url= new URL(window.location.href) //lấy url hiện tại
+    const sortSelect=sort.querySelector("[sort-select]") // từ element cha tiến hành query đến thuộc tính đã được định nghĩa
+    const sortClear=sort.querySelector("[sort-clear]")
+    sortSelect.addEventListener("change",(e)=>{
+        const value=e.target.value;
+        // console.log(value.split("-")); // hàm split dùng dể truyền từ dạng string về các phần tử của mảng và lưu vào một mảng
+        let [sortKey,sortValue]=value.split("-")
+        url.searchParams.set("sortKey",sortKey)
+        url.searchParams.set("sortValue",sortValue)
+        window.location.href=url.href; // redirect về trang mới sau khi đã truyền prams vào
+    });
+    sortClear.addEventListener("click",()=>{
+        url.searchParams.delete("sortKey")
+        url.searchParams.delete("sortValue")
+        window.location.href=url.href; // redirect về trang cũ sau khi đã xóa 2 key đi
+    })
+    // thêm selected cho option nếu selected=true thì nó sẽ mặc định chọn cái ô đó
+    const sortKey=url.searchParams.get("sortKey") // lấy từ prams xuống lại
+    const sortValue=url.searchParams.get("sortValue") // lấy từ prams xuống lại
+    console.log(sortKey);
+    console.log(sortValue);
+    if(sortKey && sortValue){
+        const string= `${sortKey}-${sortValue}`
+        const optionSelected=sortSelect.querySelector(`option[value='${string}']`);
+        optionSelected.setAttribute("selected",true);
+    }
+}

@@ -34,13 +34,22 @@ module.exports.index = async (req, res) => {
     if (req.query.page) {
         objectPagination.currentPage = parseInt(req.query.page);
     }
+    // phần xử lý backend như này là xong giờ xử lý đến phần front end để cho nó hiện thị ra ngoài giao diện người dùng nữa là oke men
+    let sort ={
+        
+    }
+    if(req.query.sortKey && req.query.sortValue){ // truyền vào giá trị là một string nên phải đưa vào dấu ngoặc vuông ở đoạn này
+        sort[req.query.sortKey]=req.query.sortValue
+    }else{
+        sort.position="desc" // default thì sắp xếp theo vị trí giảm dần từ trên xuống dưới
+    }
     // đoạn này đang xử lý bên backend chưa truyền ra cập nhật giao diện cho người dùng
     objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItems; // tính số sản phẩm hiển thị trên một page
     const countProduct = await Product.countDocuments(find)
     const totalPage = Math.ceil(countProduct / objectPagination.limitItems); // tính số trang
     objectPagination.totalPage = totalPage;
     // console.log(objectPagination.currentPage);
-    const products = await Product.find(find).sort({ position: "desc" }).limit(objectPagination.limitItems).skip(objectPagination.skip)//truy vấn data trong database nên phải có await ở đây thì skip sẽ thực hiện trước
+    const products = await Product.find(find).sort(sort).limit(objectPagination.limitItems).skip(objectPagination.skip)//truy vấn data trong database nên phải có await ở đây thì skip sẽ thực hiện trước
     // làm giao diện sản phẩm
     // console.log(products);
     res.render('admin/pages/products/index.pug', {
@@ -66,10 +75,10 @@ module.exports.changeStatus = async (req, res) => {
     res.redirect("back");
 }
 // nối các phần tử của mảng lại với nhau thành một chuỗi
-// danh sách các id dung .split là convert về thành từng phần tử và lưu vào một mảng
+// danh sách các id dung .split là chuyển từ dạng string về thành dạng mảng
 module.exports.multi = async (req, res) => {
     const type = req.body.type;
-    const ids = req.body.ids.split(", "); //convert lại về thành từng phần tử và lưu vào 1 mảng
+    const ids = req.body.ids.split(", "); //convert lại về thành từng phần tử của mảng và lưu vào 1 mảng
     switch (type) {
         case "active":
             await Product.updateMany({ _id: { $in: ids } }, { status: "active" })
@@ -87,7 +96,7 @@ module.exports.multi = async (req, res) => {
             // console.log(ids);
             for (const item of ids) { // for of là lặp qua các phần tử của mảng 
                 // console.log(item.split("+"));
-                // dùng cấu trúc destructering
+                // dùng cấu trúc destructuring
                 let [id, position] = item.split("+");
                 position = parseInt(position); // màu vàng mới là kiểu number
                 await Product.updateOne({ _id: id }, { position: position });
