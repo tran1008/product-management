@@ -1,25 +1,25 @@
 const express=require('express')
 const multer = require('multer')
-const uploadCloud=require("../../middlewares/admin/uploadCloud.middleware.js")
-const validateCategory = require("../../validates/admin/product.category.validate.js")
-const router=express.Router();
-const controller=require("../../controllers/admin/product-category-controller.js")
 const upload = multer()
+const validate = require("../../validates/admin/account.validate.js")
+const uploadCloud=require("../../middlewares/admin/uploadCloud.middleware.js")
+const controller=require("../../controllers/admin/account.controller.js")
+const router=express.Router();
 router.get('/',controller.index)
-router.get('/create', controller.create); // phương thức tạo mới một sản phẩm
+router.get('/create',controller.create)
 router.post(
     '/create',
-    upload.single("thumbnail"),
+    upload.single("avatar"),
     uploadCloud.upload,
     controller.createPost,
-    validateCategory.createPost
+    validate.createPost
 );
 router.get('/edit/:id', controller.edit);
 router.patch(
     '/edit/:id',
-    upload.single("thumbnail"),
+    upload.single("avatar"),
     uploadCloud.upload,
     controller.editPatch,
-    validateCategory.createPost
+    validate.createPost
 );
 module.exports=router;

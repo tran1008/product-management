@@ -1,0 +1,37 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+//- ô backend phải tạo ra url còn ô front end chỉ sử dụng url đó mà thôi
+block main
+    link(rel="stylesheet" href="/admin/css/style.css")
+    h1(class="mb-4") Thêm mới một nhóm quyền
+    +alert_error(5000)
+    +alert_success(5000)
+    form(
+        action=`${prefixAdmin}/roles/edit/${data.id}?_method=PATCH`
+        method="POST"
+    )
+        div(class="form-group")
+            label(for="title") Tiêu đề  
+            input(
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                required
+                value=data.title
+            )
+        div(class="form-group")
+            label(for="desc") Mô tả
+            textarea(
+                class="form-control"
+                id="desc"
+                name="description"
+                rows="5"
+                
+            ) #{data.description}
+        div(class="form-group")
+            button(
+                type="submit"
+                class="btn btn-primary"
+            ) Chỉnh sửa
+        script(src="/admin/js/product.js")

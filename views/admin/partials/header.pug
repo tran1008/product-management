@@ -1,7 +1,12 @@
 header.header
-    .container-fluid
+     .container-fluid
         .row.aligh-item-center
-        .col-3 
-            .inner-logo
-             a(href="/admin/dashboard")  ADMIN 
-        .col-9
+            .col-3 
+                .inner-logo
+                a(href="/admin/dashboard")  ADMIN 
+            .col-9
+                div(class="text-right")
+                    a(
+                        href=`${prefixAdmin}/auth/logout`
+                        class="btn btn-secondary btn-sm"
+                    ) Đăng Xuất

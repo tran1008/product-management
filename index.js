@@ -6,6 +6,7 @@ const flash = require('express-flash')
 const bodyParser = require('body-parser')
 const cookieParser=require('cookie-parser')
 const session = require('express-session')
+const moment = require('moment'); // require
 require("dotenv").config();
 const systemconfig=require("./config/system.js")
 const database=require('./config/database')
@@ -34,6 +35,7 @@ app.set('views engine', 'pug');
 app.use(express.static(`${__dirname}/public`)) //cấu hình file tĩnh
 // APP LOCAL VARIABLE
 app.locals.prefixAdmin=systemconfig.prefixAdmin
+app.locals.moment=moment
 route(app)
 routeAdmin(app)
 app.listen(port,()=>{

@@ -2,16 +2,13 @@ const mongoose = require('mongoose');
 slug = require('mongoose-slug-updater')
 mongoose.plugin(slug)
 // dạng Shema này dùng để lấy từng trường trong cơ sở dữ liệu
-const ProductCateogrySchema= mongoose.Schema({ 
+const RoleSchema= mongoose.Schema({ 
     title:String,
-    parent_id :{
-        type:String,
-        default:""
-    },
     description:String,
-    thumbnail:String,
-    status:String,
-    position:Number,
+    permission:{
+        type:Array,
+        default:[]
+    },
     slug:{
          type: String,
           slug: "title",
@@ -25,5 +22,5 @@ const ProductCateogrySchema= mongoose.Schema({
 },{
     timestamps: true 
 });
-const ProductCategory = mongoose.model('ProductCategory', ProductCateogrySchema,'products-category');
-module.exports=ProductCategory;
+const Role = mongoose.model('Role', RoleSchema,'roles');
+module.exports=Role;
