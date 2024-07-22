@@ -33,10 +33,10 @@ block main
                     id="parent_id"
                     class="form-control"
                 )
-                    option(value="") -- Chọn Danh Mục Cha --
+                    option(value="") -- Chọn Danh Mục --
                     if(records)
                     +select-tree(records,1,data.parent_id)
-                        
+                       
             div(class="form-group")
                 label(for="desc") Mô tả
                 textarea(
@@ -81,7 +81,7 @@ block main
                     id="statusActive"
                     name="status"
                     value="active"
-                    checked =(data.status == "active" ? true: false)
+                    checked=(data.status == "active" ? true: false)
                 )
                 label(for="statusActive" class="form-check-label") Hoạt động
             div(class="form-group form-check form-check-inline")

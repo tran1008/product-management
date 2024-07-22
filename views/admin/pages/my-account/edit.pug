@@ -1,0 +1,75 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+//- ô backend phải tạo ra url còn ô front end chỉ sử dụng url đó mà thôi
+block main
+        link(rel="stylesheet" href="/admin/css/style.css")
+        h1(class="mb-4") Cập nhật thông tin cá nhân
+        +alert_error(5000)
+        +alert_success(5000)
+        form(
+            action=`${prefixAdmin}/my-account/edit?_method=PATCH`
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            div(class="form-group")
+                label(for="fullName") Họ tên *
+                input(
+                    type="text"
+                    class="form-control"
+                    id="fullName"
+                    name="fullName"
+                    required
+                    value=user.fullName
+                )
+            div(class="form-group")
+                label(for="email") Email *
+                input(
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    required
+                    value=user.email
+                )
+            div(class="form-group")
+                label(for="password") Password *
+                input(
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    value=user.password
+                )             
+            div(class="form-group")
+                label(for="phone")  Số điện thoại
+                input(
+                    type="text"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    required
+                    value=user.phone
+                )
+            div(
+                class="form-group"
+                upload-image
+            )
+                label(for="avatar") avatar
+                input(
+                    type="file"
+                    class="form-control-file"
+                    id="avatar"
+                    name="avatar"
+                    accept="image/*"
+                    upload-image-input
+                )
+                img(
+                    src=user.avatar
+                    upload-image-preview
+                    class="image-preview"
+                )
+            div(class="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-primary"
+                )  Cập nhật
+                

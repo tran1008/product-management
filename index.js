@@ -38,6 +38,11 @@ app.locals.prefixAdmin=systemconfig.prefixAdmin
 app.locals.moment=moment
 route(app)
 routeAdmin(app)
+app.get("*",(req,res)=>{
+    res.render("client/pages/errors/404.pug",{
+        pageTitle:"404 not found"
+    })
+})
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
 })

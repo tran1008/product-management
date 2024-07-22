@@ -1,14 +1,47 @@
+include ../mixin/sub-menu.pug
 header.header
  .container 
     .row.align-items-center
       .col-3 
         .inner-logo
             a(href="/")
-                img(src="/images/logo.svg" alt="Logo")
-      .col-3
+                img(src=settingGeneral.thumbnail, alt=settingGeneral.websiteName)
+      .col-5 
+          form(
+            action="/search"
+            method="GET"
+          )
+            div(class="form-group d-flex mb-0")
+                input(
+                  type="text"
+                  placeholder="Nhập từ khóa..."
+                  class="form-control"
+                  name="keyword"
+                  value=keyword
+                )
+                button(
+                  type="submit"
+                  class="btn btn-primary"
+                ) Tìm
+      .col-4
         .inner-menu
             ul
               li
                 a(href="/") Trang chủ
-              li 
-                a(href="/products") Sản phẩm
+              li(class="sub-menu")
+                - const pathProducts="/products"
+                a(href=pathProducts) Sản phẩm
+                  +sub-menu(layoutProductCategory,pathProducts)
+                  //- upload lên clouddinary thay vì firebase
+              li
+                a(href="/cart") Giỏ hàng(#{minicart ? minicart.totalQuantityNumber : 0})
+              if(user)
+                li
+                  a(href="/user/info") #{user.fullName}
+                li
+                  a(href="/user/logout") Đăng xuất
+              else  
+                li
+                  a(href="/user/login") Đăng nhập
+                li
+                  a(href="/user/register") Đăng ký

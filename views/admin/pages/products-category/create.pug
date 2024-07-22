@@ -2,8 +2,9 @@ extends ../../layout/default.pug
 include ../../mixins/select-tree.pug
 include ../../mixins/alert.pug
 //- ô backend phải tạo ra url còn ô front end chỉ sử dụng url đó mà thôi
+//- ở đây đoạn if là chúng ta mới chỉ xử lý bên ngoài view mà thôi còn nếu một người dùng nào đó họ biết dc đường dẫn này và cố tình truy cập vào đây thì ta sẽ xử lý như sau
 block main
-    if(role.permission.includes("product-category-create")) 
+    if(role.permission.includes("product-category-create"))
         h1(class="mb-4") Thêm mới danh mục sản phẩm
         +alert_error(5000)
         form(
@@ -34,10 +35,9 @@ block main
                     id="parent_id"
                     class="form-control"
                 )
-                    option(value="") -- Chọn Danh Mục Cha --
+                    option(value="") -- Chọn Danh Mục --
                     if(records)
-                    +select-tree(records)
-                        
+                    +select-tree(records)          
             div(class="form-group")
                 label(for="desc") Mô tả
                 textarea(
@@ -91,7 +91,6 @@ block main
                     id="statusInactive"
                     name="status"
                     value="inactive"
-                    checked
                 )
                 label(for="statusInActive" class="form-check-label") Dừng Hoạt động
             div(class="form-group")

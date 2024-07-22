@@ -4,7 +4,6 @@ const storageMulter = require("../../helper/storageMulter.js") // nên nhớ đo
 const multer = require('multer')
 const upload = multer()
 const router = express.Router();
-
 const controller = require("../../controllers/admin/product.controller.js")
 const validate = require("../../validates/admin/product.validate.js")
 const uploadCloud=require("../../middlewares/admin/uploadCloud.middleware.js")

@@ -65,7 +65,7 @@ block main
                         upload-image-input
                     )
                     img(
-                        src=""
+                        src=data.avatar
                         upload-image-preview
                         class="image-preview"
                     )
@@ -96,7 +96,7 @@ block main
                         id="statusInactive"
                         name="status"
                         value="inactive"
-                        cchecked=(data.status == "inactive" ? true: false)
+                        checked=(data.status == "inactive" ? true: false)
                     )
                     label(for="statusInActive" class="form-check-label") Dừng Hoạt động
                 div(class="form-group")
