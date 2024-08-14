@@ -16,6 +16,14 @@ const UserSchema = mongoose.Schema({
         type:String,
         default:"active"
     },
+    requestFriends:Array,  // những người mà ông A đã gửi kết bạn
+    acceptFriends:Array, // những ngưỡi đã kết bạn với ông A
+    friendList:[ // danh sách kết bạn với ô A
+        {
+            user_id:String,
+            room_chat_id:String 
+        }
+    ],
     deleted: {
         type: Boolean,
         default: false,

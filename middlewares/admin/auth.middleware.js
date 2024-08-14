@@ -2,7 +2,7 @@ const systemConfig = require("../../config/system")
 const Account=require('../../models/account.model.js')
 const Role = require("../../models/role.model.js")
 module.exports.reqAuth= async(req, res, next)=>{
-   if(!req.cookies.token){ // check xem liệu có token hay chưa
+   if(!req.cookies.token){ // ví dụ người dùng cố tính truy cập vào route đó thì check xem liệu có token hay chưa
         res.redirect(`${systemConfig.prefixAdmin}/auth/login`)
    }else{
     const user= await Account.findOne({token:req.cookies.token}).select("-password")

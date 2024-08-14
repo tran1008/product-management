@@ -1,0 +1,79 @@
+extend ../../layout/default.pug
+include ../../mixin/box-head.pug
+
+block main 
+    .container.my-3
+        include ../../partials/btn-list-users.pug
+        .row 
+            .col-12 
+                +box-head("Chat")
+        .row 
+            .col-12
+                .chat(my-id=user.id)
+                    .inner-body 
+                        each chat in chats
+                            div(class=(chat.user_id==user.id) ? "inner-outgoing" :"inner-incoming" )
+                                if(chat.user_id !==user.id)
+                                    .inner-name #{chat.infoUser.fullName}
+                                if(chat.content)
+                                    .inner-content
+                                        | #{chat.content}
+                                if(chat.images)
+                                    .inner-images
+                                        each image in chat.images 
+                                            img(src=image)
+                        div(class="inner-list-typing")
+                            //- div(class="box-typing")
+                            //-     div(class="inner-name") Lê Văn A 
+                            //-     div(class="inner-dots")
+                            //-         span 
+                            //-         span 
+                            //-         span 
+                            //- div(class="box-typing")
+                            //-     div(class="inner-name") Lê Văn B
+                            //-     div(class="inner-dots")
+                            //-         span 
+                            //-         span 
+                            //-         span 
+                        //-  
+                        //-     .inner-content
+                        //-         | Thế à ? Oke e iu
+                        //- .inner-incoming 
+                        //-     .inner-name Em yêu
+                        //-     .inner-content
+                        //-         | Nhanh nha nhanh nha 
+                        //- .inner-outgoing 
+                        //-     .inner-content
+                        //-         | Ck đến rồi mà có thấy ai ở nhà đâu ? Khóa cửa mà
+                        //- .inner-incoming 
+                        //-     .inner-name Em yêu
+                        //-     .inner-content
+                        //-         | Thì e bảo nhà e ko có ai ở nhà mà :))
+                    .inner-preview-image 
+                        div(
+                            class="custom-file-container"
+                            data-upload-id="upload-images"
+                        )
+                        .inner-foot
+                            form(
+                                class="inner-form"
+                                action=""
+                            )
+                                input(
+                                    type="text"
+                                    placeholder="Nhập nội dung..."
+                                    name="content"
+                                    )
+                                label(
+                                    class="btn btn-light mx-2 mb-0"
+                                    for="file-upload-with-preview-upload-images"
+                                    )
+                                    i.fa-regular.fa-image
+                                span(class="button-icon btn btn-light mx-2")
+                                    i.fa-regular.fa-face-smile
+                                button
+                                    i.fa-solid.fa-paper-plane
+    div(class="tooltip" role="tooltip")
+        emoji-picker(class="light")
+block script
+    script(type="module" src="/js/chat.js")

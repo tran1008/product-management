@@ -11,6 +11,8 @@ module.exports.login= async(req,res)=>{ // check xem nếu ở trang dashboard r
         })
     }
 }
+// khi tạo mới một tài khoản bên phía admin backend thì ta cần lưu thêm token user vào hệ thống để khi mà người dùng cố tình truy cập vào route
+// khi đăng nhập chúng ta cần lưu token vào cookie
 // [POST] /admin/login
 //khi đăng nhập thành công thì backend phải trả về cho frontend một cái gọi là token để lưu vào cookie, từ lần sau trở đi khi người dùng truy cập vào router này thì sẽ viết một cái middleware dể đọc token từ backend gửi lên
 module.exports.loginPost = async(req,res)=>{

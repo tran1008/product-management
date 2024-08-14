@@ -1,13 +1,26 @@
-.header{
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+.header {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
-    justify-content:space-between;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.header .inner-logo img{
+
+.header .inner-logo img {
     max-height: 50px;
     max-width: 100%;
 }
-.header .inner-menu > ul{
+
+.header .inner-menu > ul {
     list-style: none;
     display: flex;
     padding: 0;
@@ -16,10 +29,13 @@
     justify-content: flex-start;
     flex-wrap: wrap;
 }
+
 .header .inner-menu > ul > li {
     margin-left: 20px;
 }
-.footer{
+
+/* Footer styles */
+.footer {
     background-color: #333;
     color: white;
     font-size: 24px;
@@ -27,32 +43,36 @@
     text-align: center;
 }
 
-/*End Footer */
-.box-head{
+/* Box and title styles */
+.box-head {
     margin-bottom: 30px;
 }
-.box-head .inner-title{
+
+.box-head .inner-title {
     margin-bottom: 0;
     font-size: 28px;
     font-weight: 600;
     color: green;
 }
-.product-item{
+
+/* Product item styles */
+.product-item {
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
     height: 100%;
 }
 
-.product-item .inner-image{
-    width: 100;
-    aspect-ratio: 4/3;
+.product-item .inner-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
     border-bottom: 1px solid #ddd;
     position: relative;
 }
-.product-item .inner-featured{
+
+.product-item .inner-featured {
     position: absolute;
-    top:0;
+    top: 0;
     right: 0;
     background: green;
     color: white;
@@ -61,30 +81,36 @@
     font-size: 14px;
     border-radius: 8px;
 }
-.product-item .inner-image img{
+
+.product-item .inner-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.product-item .inner-content{
+
+.product-item .inner-content {
     padding: 15px;
 }
-.product-item .inner-content .inner-title{
+
+.product-item .inner-content .inner-title {
     font-size: 20px;
     font-weight: 700;
 }
-.product-item .inner-content .inner-price-new{
+
+.product-item .inner-content .inner-price-new {
     font-size: 18px;
     font-weight: 600;
     color: green;
 }
-.product-item .inner-content .inner-price-old{
+
+.product-item .inner-content .inner-price-old {
     font-size: 18px;
     font-weight: 600;
     color: red;
     text-decoration: line-through;
 }
-.product-item .inner-content .inner-discount{
+
+.product-item .inner-content .inner-discount {
     font-size: 14px;
     font-weight: 600;
     color: white;
@@ -93,14 +119,17 @@
     padding: 3px 10px;
     border-radius: 8px;
 }
+
+/* Sub-menu styles */
 .sub-menu {
     position: relative;
     z-index: 999;
 }
-.sub-menu ul{
+
+.sub-menu ul {
     position: absolute;
     right: 0;
-    top:100%;
+    top: 100%;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -108,41 +137,49 @@
     min-width: 180px;
     display: none;
 }
+
 .sub-menu:hover > ul {
     display: block;
 }
-.sub-menu ul li{
+
+.sub-menu ul li {
     position: relative;
 }
-.sub-menu ul li ul{
-    right:100%;
-    top:0
+
+.sub-menu ul li ul {
+    right: 100%;
+    top: 0;
 }
-.sub-menu ul li:hover > ul{
+
+.sub-menu ul li:hover > ul {
     display: block;
 }
 
-
-.product-detail .inner-thumb img{
+/* Product detail styles */
+.product-detail .inner-thumb img {
     width: 100%;
     height: auto;
 }
-.product-detail .inner-title{
+
+.product-detail .inner-title {
     font-size: 32px;
     margin-bottom: 15px;
 }
-.product-detail .inner-price-new{
-    color:green;
+
+.product-detail .inner-price-new {
+    color: green;
     font-weight: 600;
     font-size: 24px;
     margin-bottom: 10px;
 }
 
-.product-detail .inner-price-old{
+.product-detail .inner-price-old {
     text-decoration: line-through;
     font-weight: 700;
     font-size: 20px;
 }
+
+/* Alert styles */
 [show-alert] {
     position: fixed;
     top: 70px;
@@ -185,4 +222,239 @@
     position: absolute;
     top: 5px;
     right: 5px;
+}
+
+/* Chat styles */
+.chat {
+    width: 600px;
+    max-width: 90%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 500px;
+    margin: 20px auto; /* Center chat and add space around */
+}
+.chat .inner-body .inner-images img{
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    background-color: #efefef;
+    padding: 10px;
+    margin: 0 5px 5px 0;
+    border-radius: 5px;
+}
+.chat .inner-preview-image .label-container{
+    display: none;
+}
+.chat .inner-preview-image  .input-container{
+    display: none;
+}
+.chat .inner-preview-image  .image-preview{
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+}
+.chat .inner-preview-image  .image-preview-item{
+    width: 90px;
+    background-size: contain;
+}
+.chat .inner-body .inner-outgoing .inner-images{
+    margin-left: auto;
+    text-align: right;
+}
+.chat .inner-body .inner-outgoing .inner-images img{
+    margin: 0 0 5px 5px;
+}
+.inner-body {
+    padding: 10px;
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.inner-incoming,
+.inner-outgoing {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.inner-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.inner-incoming .inner-content,
+.inner-outgoing .inner-content {
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 15px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.inner-incoming .inner-content {
+    background-color: #e1ffc7;
+    margin-right: auto;
+}
+
+.inner-outgoing .inner-content {
+    background-color: #d1e7fd;
+    margin-left: auto;
+}
+
+.inner-foot {
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.inner-form {
+    display: flex;
+    width: 100%;
+}
+
+.inner-form input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+.inner-form button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.inner-form button:hover {
+    background-color: #45a049;
+}
+
+.fa-paper-plane {
+    margin-left: 5px;
+}
+/* Show Pop Up */
+.tooltip{
+    visibility: hidden;
+}
+.tooltip.show{
+    visibility: visible;
+    opacity: 1;
+}
+/* End Show Pop Up */
+.box-typing{
+    position: relative;
+}
+.box-typing .inner-dots{
+    position: relative;
+    height: 20px;
+    width: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #efefef;
+    border-radius: 45px;
+    margin-top: 2px;
+}
+.box-typing .inner-dots span{
+    animation: blink 1.5s infinite;
+    height: 5px;
+    width: 5px;
+    background-color: #252525;
+    border-radius: 50%;
+    display: inline-block;
+    margin:0 3px;
+}
+.box-typing .inner-dots span:nth-child(2){
+    animation-delay: 0.2s;
+}
+.box-typing .inner-dots span:nth-child(3){
+    animation-delay: 0.4s;
+}
+@keyframes blink {
+    0% {
+        opacity: 0.1;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.1;
+    }
+    
+}
+
+.box-user{
+    display: flex;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+.box-user .inner-avatar{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #f2f2f2;
+    margin-right: 10px;
+}
+.box-user .inner-avatar img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.box-user .inner-info{
+    flex:1
+}
+.box-user .inner-info .inner-name{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+.box-user [btn-cancel-friend]{
+    display: none;
+}
+.box-user.add [btn-add-friend]{
+    display: none;
+}
+.box-user.add [btn-cancel-friend]{
+    display: inline-block;
+}
+
+.box-user [btn-deleted-friend]{
+    display: none;
+}
+.box-user.refuse [btn-accept-friend]{
+    display: none;
+}
+.box-user.refuse [btn-refuse-friend]{
+    display: none;
+}
+.box-user.refuse [btn-deleted-friend]{
+    display: inline-block;
+}
+.box-user [btn-accepted-friend]{
+    display: none;
+}
+.box-user.accept [btn-accept-friend]{
+    display: none;
+}
+.box-user.accept [btn-refuse-friend]{
+    display: none;
+}
+.box-user.accept [btn-accepted-friend]{
+    display: inline-block;
 }

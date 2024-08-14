@@ -12,12 +12,16 @@ const systemconfig=require("./config/system.js")
 const database=require('./config/database')
 const route=require("./routes/client/index.route")
 const routeAdmin=require("./routes/admin/index.route")
-
 // connect xong rồi thì tạo ra model để query dữ liệu từ cơ sở dữ liệu
 database.connect();
 // console.log(database)
 // dạng Shema này dùng để lấy từng trường trong cơ sở dữ liệu
 const app=express();
+const http=require('http')
+const server=http.createServer(app);
+const {Server}=require('socket.io');
+const io=new Server(server);
+global._io=io;
 const port=process.env.PORT;
 app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: false })) // đoạn này extended bằng false có nghĩa rằng this object will  contain a key-value, where the value can be a string or array
@@ -43,7 +47,7 @@ app.get("*",(req,res)=>{
         pageTitle:"404 not found"
     })
 })
-app.listen(port,()=>{
+server.listen(port,()=>{
     console.log(`Server is running on port ${port}`);
 })
 //tạo ra bộ soạn thảo cơ bản dùng tinyMCE, tạo ra nhiều bộ sản phẩm thêm class vào
